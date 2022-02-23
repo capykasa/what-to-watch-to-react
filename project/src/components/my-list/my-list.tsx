@@ -12,7 +12,7 @@ function MyList(): JSX.Element {
     <>
       <HeaderButton /> {/* Есть лишние строчки с 42 */}
       <div className="user-page">
-        <HeaderAccount />
+        <HeaderAccount /> {/* Не хватает  <h1 class="page-title user-page__title">My list</h1> */}
 
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
