@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import AddReview from '../add-review/add-review';
