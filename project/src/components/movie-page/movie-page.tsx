@@ -4,7 +4,6 @@ import { Film } from '../../types/films';
 import Footer from '../footer/footer';
 import HeaderAccount from '../header-account/header-account';
 import HeaderButton from '../header-button/header-button';
-import HeaderFilm from '../header-film/header-film';
 import PageNotFound from '../page-not-found/page-not-found';
 import RelatedMovies from '../related-movies/related-movies';
 
@@ -36,7 +35,32 @@ function MoviePage(props: MoviePageProps): JSX.Element {
           <h1 className="visually-hidden">WTW</h1>
 
           <HeaderAccount />
-          <HeaderFilm />
+
+          <div className="film-card__wrap">
+            <div className="film-card__desc">
+              <h2 className="film-card__title">{film.name}</h2>
+              <p className="film-card__meta">
+                <span className="film-card__genre">{film.genre}</span>
+                <span className="film-card__year">{film.released}</span>
+              </p>
+
+              <div className="film-card__buttons">
+                <button className="btn btn--play film-card__button" type="button">
+                  <svg viewBox="0 0 19 19" width="19" height="19">
+                    <use xlinkHref="#play-s"></use>
+                  </svg>
+                  <span>Play</span>
+                </button>
+                <button className="btn btn--list film-card__button" type="button">
+                  <svg viewBox="0 0 19 20" width="19" height="20">
+                    <use xlinkHref="#add"></use>
+                  </svg>
+                  <span>My list</span>
+                </button>
+                <a href="add-review.html" className="btn film-card__button">Add review</a>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="film-card__wrap film-card__translate-top">
