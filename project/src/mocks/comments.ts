@@ -34,4 +34,28 @@ export const comments: Comment[] = [
     hour and 40 minutes I wish I could take back.`,
     date: '2019-05-08T14:13:56.569Z',
   },
+  {
+    id: 4,
+    user: {
+      id: 2,
+      name: 'Bill Goodykoontz',
+    },
+    rating: 8.1,
+    comment: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious
+    Mittel-European kitsch of one of the director's funniest and most exquisitely designed films in
+    years.`,
+    date: '2019-05-08T14:13:56.569Z',
+  },
+  {
+    id: 5,
+    user: {
+      id: 41,
+      name: 'Paula Fleri-Soler',
+    },
+    rating: 8.1,
+    comment: `Anderson's films are too precious for some, but for those of us willing to
+    lose ourselves in them, they're a delight. "The Grand Budapest Hotel" is no different, except that
+    he has added a hint of gravitas to the mix, improving the recipe.`,
+    date: '2019-05-08T14:13:56.569Z',
+  },
 ];

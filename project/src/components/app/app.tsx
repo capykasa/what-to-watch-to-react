@@ -34,7 +34,7 @@ function App({ films, comments }: AppScreenProps): JSX.Element {
         <Route path={AppRoute.MyList}
           element={
             <PrivateRoute
-              render={() => <MyList />}
+              render={() => <MyList films={films} />}
             >
             </PrivateRoute>
           }
