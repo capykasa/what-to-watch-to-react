@@ -6,6 +6,7 @@ type MoviePageOverviewProps = {
 }
 
 export default class MoviePageOverview extends React.Component<MoviePageOverviewProps> {
+
   render() {
     const { film } = this.props;
 

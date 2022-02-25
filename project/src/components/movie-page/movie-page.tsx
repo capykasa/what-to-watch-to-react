@@ -1,11 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { MoviePageNavigate } from '../../const';
 import { Comment } from '../../types/comments';
 import { Film } from '../../types/films';
 import Footer from '../footer/footer';
 import HeaderAccount from '../header-account/header-account';
 import HeaderButton from '../header-button/header-button';
 import MoviePageOverview from '../movie-page-overview/movie-page-overview';
+import MoviePageDetails from '../movie-page-details/movie-page-details';
+import MoviePageReviews from '../movie-page-reviews/movie-page-reviews';
 import PageNotFound from '../page-not-found/page-not-found';
 import RelatedMovies from '../related-movies/related-movies';
 
@@ -14,11 +19,31 @@ type MoviePageProps = {
   comments: Comment[],
 }
 
-export default class MoviePage extends React.Component<MoviePageProps> {
+type MyState = {
+  selectedNavigateName: string;
+}
+
+export default class MoviePage extends React.Component<MoviePageProps, MyState> {
+  constructor(props: MoviePageProps) {
+    super(props);
+
+    this.state = {
+      selectedNavigateName: 'Overview',
+    };
+  }
+
+  DisplayNavigatePage = (pageName: string, film: Film, comments: Comment[]) => {
+    if (pageName === 'Details') {
+      return <MoviePageDetails film={film} />;
+    }
+    if (pageName === 'Reviews') {
+      return <MoviePageReviews comments={comments} />;
+    }
+    return <MoviePageOverview film={film} />;
+  };
 
   render() {
     const { films, comments } = this.props;
-    console.log(films, comments);
 
     const currentFilmId = parseInt(document.location.pathname.replace('/films/:', ''), 10);
     const film = films.find((item) => item.id === currentFilmId);
@@ -76,21 +101,23 @@ export default class MoviePage extends React.Component<MoviePageProps> {
               <div className="film-card__desc">
                 <nav className="film-nav film-card__nav">
                   <ul className="film-nav__list">
-                    <li className="film-nav__item film-nav__item--active">
-                      <a href="/" className="film-nav__link">Overview</a>
-                    </li>
-                    <li className="film-nav__item">
-                      <a href="/" className="film-nav__link">Details</a>
-                    </li>
-                    <li className="film-nav__item">
-                      <a href="/" className="film-nav__link">Reviews</a>
-                    </li>
+                    {Object.values(MoviePageNavigate).map((item: string) => (
+                      <li key={item} className={this.state.selectedNavigateName === item ? 'film-nav__item film-nav__item--active' : 'film-nav__item'}>
+                        <Link to=''
+                          onClick={() => {
+                            this.setState({ selectedNavigateName: item });
+                          }}
+                          className="film-nav__link"
+                        >
+                          {item}
+                        </Link>
+                      </li>
+                    ))}
                   </ul>
                 </nav>
 
-                <MoviePageOverview
-                  film={film}
-                />
+                {this.DisplayNavigatePage(this.state.selectedNavigateName, film, comments)}
+
               </div>
             </div>
           </div>

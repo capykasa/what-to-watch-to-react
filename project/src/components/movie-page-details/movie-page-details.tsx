@@ -1,11 +1,11 @@
 import React from 'react';
 import { Film } from '../../types/films';
 
-type MoviePageProps = {
+type MoviePageDetailsProps = {
   film: Film;
 }
 
-export default class MoviePage extends React.Component<MoviePageProps> {
+export default class MoviePageDetails extends React.Component<MoviePageDetailsProps> {
 
   render() {
     const { film } = this.props;

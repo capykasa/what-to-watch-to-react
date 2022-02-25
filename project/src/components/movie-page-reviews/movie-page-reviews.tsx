@@ -2,11 +2,12 @@ import React from 'react';
 import { Comment } from '../../types/comments';
 import Review from '../review/review';
 
-type MoviePageProps = {
+type MoviePageReviewsProps = {
   comments: Comment[];
 }
 
-export default class MoviePage extends React.Component<MoviePageProps> {
+export default class MoviePageReviews extends React.Component<MoviePageReviewsProps> {
+
   render() {
     const { comments } = this.props;
 
