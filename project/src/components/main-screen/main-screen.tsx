@@ -4,12 +4,15 @@ import Footer from '../footer/footer';
 import HeaderFilm from '../header-film/header-film';
 import HeaderAccount from '../header-account/header-account';
 import HeaderButton from '../header-button/header-button';
+import { Film } from '../../types/films';
 
 type MainScreenProps = {
-  filmsCount: number;
+  films: Film[],
 }
 
-function MainScreen({ filmsCount }: MainScreenProps): JSX.Element {
+function MainScreen(props: MainScreenProps): JSX.Element {
+  const { films } = props;
+
   return (
     <>
       <HeaderButton />
@@ -29,7 +32,7 @@ function MainScreen({ filmsCount }: MainScreenProps): JSX.Element {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
           <Catalog />
           <FilmsList
-            filmsCount={filmsCount}
+            films={films}
           />
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

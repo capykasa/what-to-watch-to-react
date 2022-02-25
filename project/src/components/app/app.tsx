@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { Comment } from '../../types/comments';
+import { Film } from '../../types/films';
 import AddReview from '../add-review/add-review';
 import MainScreen from '../main-screen/main-screen';
 import MoviePage from '../movie-page/movie-page';
@@ -11,17 +13,18 @@ import PrivateRoute from '../private-route/private-route';
 import SignIn from '../sign-in/sign-in';
 
 type AppScreenProps = {
-  filmsCount: number;
+  films: Film[],
+  comments: Comment[],
 }
 
-function App({ filmsCount }: AppScreenProps): JSX.Element {
+function App({ films, comments }: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Main}
           element={
             <MainScreen
-              filmsCount={filmsCount}
+              films={films}
             />
           }
         />
@@ -37,7 +40,12 @@ function App({ filmsCount }: AppScreenProps): JSX.Element {
           }
         />
         <Route path={AppRoute.Film}
-          element={<MoviePage />}
+          element={
+            <MoviePage
+              films={films}
+              comments={comments}
+            />
+          }
         />
         <Route path={AppRoute.Player}
           element={<Player />}
@@ -50,5 +58,13 @@ function App({ filmsCount }: AppScreenProps): JSX.Element {
     </BrowserRouter >
   );
 }
+
+/* (function () {
+  fetch('https://8.react.pages.academy/wtw/films')
+    .then((response) => response.json())
+    .then((ads) => {
+      console.log(ads);
+    });
+})(); */
 
 export default App;
