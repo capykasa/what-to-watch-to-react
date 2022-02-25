@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import { Film } from '../../types/films';
 import FilmCard from '../film-card/film-card';
@@ -6,20 +7,42 @@ type FilmsListProps = {
   films: Film[];
 }
 
-function FilmsList(props: FilmsListProps): JSX.Element {
-  const { films } = props;
-
-  return (
-    <div className="catalog__films-list">
-      {films.map((film: Film) => (
-        <React.Fragment key={film.id}>
-          <FilmCard
-            film={film}
-          />
-        </React.Fragment>
-      ))}
-    </div>
-  );
+type MyState = {
+  selectedFilm: Film | null;
 }
 
-export default FilmsList;
+export default class FilmsList extends React.Component<FilmsListProps, MyState> {
+  constructor(props: FilmsListProps) {
+    super(props);
+
+    this.state = {
+      selectedFilm: null,
+    };
+  }
+
+  render() {
+    const { films } = this.props;
+    const { selectedFilm } = this.state;
+    return (
+      <div className="catalog__films-list">
+        {films.map((film: Film) => (
+          <article
+            className="small-film-card catalog__films-card"
+            key={film.id}
+            onPointerEnter={() => {
+              this.setState({ selectedFilm: film });
+              console.log(selectedFilm);
+            }}
+            onPointerLeave={() => {
+              this.setState(null);
+            }}
+          >
+            <FilmCard
+              film={film}
+            />
+          </article>
+        ))}
+      </div>
+    );
+  }
+}
