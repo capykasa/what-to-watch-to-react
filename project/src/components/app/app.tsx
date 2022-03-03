@@ -59,12 +59,4 @@ function App({ films, comments }: AppScreenProps): JSX.Element {
   );
 }
 
-/* (function () {
-  fetch('https://8.react.pages.academy/wtw/films')
-    .then((response) => response.json())
-    .then((ads) => {
-      console.log(ads);
-    });
-})(); */
-
 export default App;

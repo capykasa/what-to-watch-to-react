@@ -43,7 +43,8 @@ export default class MoviePage extends React.Component<MoviePageProps, MyState> 
   render() {
     const { films, comments } = this.props;
 
-    const currentFilmId = parseInt(document.location.pathname.replace('/films/:', ''), 10);
+    const currentPathName = document.location.pathname;
+    const currentFilmId = parseInt(currentPathName.replace('/films/:', ''), 10);
     const film = films.find((item) => item.id === currentFilmId);
 
     if (!film) {
@@ -84,7 +85,12 @@ export default class MoviePage extends React.Component<MoviePageProps, MyState> 
                     </svg>
                     <span>My list</span>
                   </button>
-                  <a href="add-review.html" className="btn film-card__button">Add review</a>
+                  <Link to={`/films/${film.id}/review`}
+                    className="btn film-card__button"
+                    type='button'
+                  >
+                    Add review
+                  </Link>
                 </div>
               </div>
             </div>
