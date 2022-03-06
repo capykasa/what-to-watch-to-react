@@ -16,12 +16,13 @@ export default class AddReview extends React.Component {
     reviewText: '',
   };
 
-  render() {
-    const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
-      // eslint-disable-next-line no-console
-      console.log(this.state.rating, this.state.reviewText);
-    };
+  _handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    // eslint-disable-next-line no-console
+    console.log('Отзыв:', this.state);
+  };
 
+  render() {
 
     return (
       <section className="film-card film-card--full">
@@ -59,7 +60,7 @@ export default class AddReview extends React.Component {
             action="#"
             className="add-review__form"
             method="post"
-            onSubmit={handleSubmit}
+            onSubmit={this._handleSubmit}
           >
             <div className="rating">
               <div

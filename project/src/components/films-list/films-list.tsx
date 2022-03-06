@@ -21,7 +21,6 @@ export default class FilmsList extends React.Component<FilmsListProps, MyState> 
 
   render() {
     const { films } = this.props;
-    const { selectedFilm } = this.state;
     return (
       <div className="catalog__films-list">
         {films.map((film: Film) => (
@@ -30,8 +29,6 @@ export default class FilmsList extends React.Component<FilmsListProps, MyState> 
             key={film.id}
             onPointerEnter={() => {
               this.setState({ selectedFilm: film });
-              // eslint-disable-next-line no-console
-              console.log(selectedFilm);
             }}
             onPointerLeave={() => {
               this.setState(null);

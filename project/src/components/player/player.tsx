@@ -1,14 +1,22 @@
 import React from 'react';
+import { Film } from '../../types/films';
 import HeaderButton from '../header-button/header-button';
 
-export default class Player extends React.Component {
+type PlayerProps = {
+  films: Film[];
+}
+
+export default class Player extends React.Component<PlayerProps> {
 
   render() {
+    const { films } = this.props;
+    const film = films[0];
+
     return (
       <>
         <HeaderButton /> {/* Лишние строчки с 42 */}
         <div className="player">
-          <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+          <video src={film.videoLink} className="player__video" poster="img/player-poster.jpg"></video>
 
           <button type="button" className="player__exit">Exit</button>
 
@@ -18,7 +26,7 @@ export default class Player extends React.Component {
                 <progress className="player__progress" value="30" max="100"></progress>
                 <div className="player__toggler" style={{ left: '30%' }}>Toggler</div>
               </div>
-              <div className="player__time-value">1:30:29</div>
+              <div className="player__time-value">{film.runTime}</div>
             </div>
 
             <div className="player__controls-row">
