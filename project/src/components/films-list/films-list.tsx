@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react';
 import { Film } from '../../types/films';
 import FilmCard from '../film-card/film-card';
@@ -31,6 +30,7 @@ export default class FilmsList extends React.Component<FilmsListProps, MyState> 
             key={film.id}
             onPointerEnter={() => {
               this.setState({ selectedFilm: film });
+              // eslint-disable-next-line no-console
               console.log(selectedFilm);
             }}
             onPointerLeave={() => {

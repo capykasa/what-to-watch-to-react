@@ -2,7 +2,7 @@ import React from 'react';
 import { Film } from '../../types/films';
 import FilmCard from '../film-card/film-card';
 import Footer from '../footer/footer';
-import HeaderAccount from '../header-account/header-account';
+import Header from '../header/header';
 import HeaderButton from '../header-button/header-button';
 
 type MyListProps = {
@@ -17,7 +17,7 @@ export default class MyList extends React.Component<MyListProps> {
         <HeaderButton /> {/* Есть лишние строчки с 42 */}
         <div className="user-page">
 
-          <HeaderAccount MyListHeading />
+          <Header MyListHeading />
 
           <section className="catalog">
             <h2 className="catalog__title visually-hidden">Catalog</h2>

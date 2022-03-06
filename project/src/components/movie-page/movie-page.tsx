@@ -4,13 +4,15 @@ import { MoviePageNavigate } from '../../const';
 import { Comment } from '../../types/comments';
 import { Film } from '../../types/films';
 import Footer from '../footer/footer';
-import HeaderAccount from '../header-account/header-account';
+import Header from '../header/header';
 import HeaderButton from '../header-button/header-button';
 import MoviePageOverview from '../movie-page-overview/movie-page-overview';
 import MoviePageDetails from '../movie-page-details/movie-page-details';
 import MoviePageReviews from '../movie-page-reviews/movie-page-reviews';
 import PageNotFound from '../page-not-found/page-not-found';
-import RelatedMovies from '../related-movies/related-movies';
+import FilmCard from '../film-card/film-card';
+
+const NUMBER_OF_RELATED_FILMS = 4;
 
 type MoviePageProps = {
   films: Film[];
@@ -46,6 +48,7 @@ export default class MoviePage extends React.Component<MoviePageProps, MyState> 
     const currentPathName = document.location.pathname;
     const currentFilmId = parseInt(currentPathName.replace('/films/:', ''), 10);
     const film = films.find((item) => item.id === currentFilmId);
+    const relatedMovies = films.slice(NUMBER_OF_RELATED_FILMS);
 
     if (!film) {
       return <PageNotFound />;
@@ -62,7 +65,7 @@ export default class MoviePage extends React.Component<MoviePageProps, MyState> 
 
             <h1 className="visually-hidden">WTW</h1>
 
-            <HeaderAccount />
+            <Header />
 
             <div className="film-card__wrap">
               <div className="film-card__desc">
@@ -130,7 +133,20 @@ export default class MoviePage extends React.Component<MoviePageProps, MyState> 
         <div className="page-content">
           <section className="catalog catalog--like-this">
             <h2 className="catalog__title">More like this</h2>
-            <RelatedMovies />
+            <div className="catalog__films-list">
+              {relatedMovies
+                ? relatedMovies.map((relatedFilm: Film) => (
+                  <article
+                    className="small-film-card catalog__films-card"
+                    key={relatedFilm.id}
+                  >
+                    <FilmCard
+                      film={relatedFilm}
+                    />
+                  </article>
+                ))
+                : ''}
+            </div>
           </section>
           <Footer />
         </div>

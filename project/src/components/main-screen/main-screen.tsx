@@ -1,7 +1,7 @@
 import FilmsList from '../films-list/films-list';
 import Catalog from '../catalog/catalog';
 import Footer from '../footer/footer';
-import HeaderAccount from '../header-account/header-account';
+import Header from '../header/header';
 import HeaderButton from '../header-button/header-button';
 import { Film } from '../../types/films';
 
@@ -23,7 +23,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <HeaderAccount />
+        <Header />
 
         <div className="film-card__wrap">
           <div className="film-card__info">
