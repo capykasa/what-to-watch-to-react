@@ -11,6 +11,8 @@ import MoviePageDetails from '../movie-page-details/movie-page-details';
 import MoviePageReviews from '../movie-page-reviews/movie-page-reviews';
 import PageNotFound from '../page-not-found/page-not-found';
 import FilmCard from '../film-card/film-card';
+import { connect, ConnectedProps } from 'react-redux';
+import { State } from '../../types/state';
 
 const NUMBER_OF_RELATED_FILMS = 4;
 
@@ -23,8 +25,17 @@ type MyState = {
   selectedNavigateName: string;
 }
 
-export default class MoviePage extends React.Component<MoviePageProps, MyState> {
-  constructor(props: MoviePageProps) {
+const mapStateToProps = ({ selectedFilm }: State) => ({
+  selectedFilm,
+});
+
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & MoviePageProps;
+
+class MoviePage extends React.Component<ConnectedComponentProps, MyState> {
+  constructor(props: ConnectedComponentProps) {
     super(props);
 
     this.state = {
@@ -43,14 +54,10 @@ export default class MoviePage extends React.Component<MoviePageProps, MyState> 
   };
 
   render() {
-    const { films, comments } = this.props;
-
-    const currentPathName = document.location.pathname;
-    const currentFilmId = parseInt(currentPathName.replace('/films/:', ''), 10);
-    const film = films.find((item) => item.id === currentFilmId);
+    const { films, selectedFilm, comments } = this.props;
     const relatedMovies = films.slice(NUMBER_OF_RELATED_FILMS);
 
-    if (!film) {
+    if (!selectedFilm) {
       return <PageNotFound />;
     }
 
@@ -60,7 +67,7 @@ export default class MoviePage extends React.Component<MoviePageProps, MyState> 
         <section className="film-card film-card--full">
           <div className="film-card__hero">
             <div className="film-card__bg">
-              <img src={film.previewImage} alt={film.name} />
+              <img src={selectedFilm.previewImage} alt={selectedFilm.name} />
             </div>
 
             <h1 className="visually-hidden">WTW</h1>
@@ -69,10 +76,10 @@ export default class MoviePage extends React.Component<MoviePageProps, MyState> 
 
             <div className="film-card__wrap">
               <div className="film-card__desc">
-                <h2 className="film-card__title">{film.name}</h2>
+                <h2 className="film-card__title">{selectedFilm.name}</h2>
                 <p className="film-card__meta">
-                  <span className="film-card__genre">{film.genre}</span>
-                  <span className="film-card__year">{film.released}</span>
+                  <span className="film-card__genre">{selectedFilm.genre}</span>
+                  <span className="film-card__year">{selectedFilm.released}</span>
                 </p>
 
                 <div className="film-card__buttons">
@@ -88,7 +95,7 @@ export default class MoviePage extends React.Component<MoviePageProps, MyState> 
                     </svg>
                     <span>My list</span>
                   </button>
-                  <Link to={`/films/${film.id}/review`}
+                  <Link to={`/films/${selectedFilm.id}/review`}
                     className="btn film-card__button"
                     type='button'
                   >
@@ -102,7 +109,7 @@ export default class MoviePage extends React.Component<MoviePageProps, MyState> 
           <div className="film-card__wrap film-card__translate-top">
             <div className="film-card__info">
               <div className="film-card__poster film-card__poster--big">
-                <img src={film.posterImage} alt={`${film.name} poster`} width="218" height="327" />
+                <img src={selectedFilm.posterImage} alt={`${selectedFilm.name} poster`} width="218" height="327" />
               </div>
 
               <div className="film-card__desc">
@@ -123,7 +130,7 @@ export default class MoviePage extends React.Component<MoviePageProps, MyState> 
                   </ul>
                 </nav>
 
-                {this.DisplayNavigatePage(this.state.selectedNavigateName, film, comments)}
+                {this.DisplayNavigatePage(this.state.selectedNavigateName, selectedFilm, comments)}
 
               </div>
             </div>
@@ -154,3 +161,5 @@ export default class MoviePage extends React.Component<MoviePageProps, MyState> 
     );
   }
 }
+
+export default connect(mapStateToProps)(MoviePage);
