@@ -3,14 +3,8 @@ import Catalog from '../catalog/catalog';
 import Footer from '../footer/footer';
 import Header from '../header/header';
 import HeaderButton from '../header-button/header-button';
-import { Film } from '../../types/films';
 
-type MainScreenProps = {
-  films: Film[],
-}
-
-function MainScreen(props: MainScreenProps): JSX.Element {
-  const { films } = props;
+function MainScreen(): JSX.Element {
 
   return (
     <>
@@ -61,9 +55,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
           <Catalog />
-          <FilmsList
-            films={films}
-          />
+          <FilmsList />
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
           </div>
