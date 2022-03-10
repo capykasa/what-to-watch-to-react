@@ -1,13 +1,35 @@
-import { Film } from './films';
+import { ThunkAction, ThunkDispatch } from '@reduxjs/toolkit';
+import { AxiosInstance } from 'axios';
+import { State } from './state';
+import {
+  loadFilms,
+  loadRelatedFilms,
+  loadReviews,
+  requireAuthorization,
+  selectFilm,
+  setUsername,
+  redirectToRoute
+} from '../store/action';
 
 export enum ActionType {
   SelectFilm = 'films/selectedFilm',
+  LoadFilms = 'data/loadFilms',
+  LoadRelatedFilms = 'data/loadRelatedFilms',
+  LoadReviews = 'data/loadReviews',
+  RequireAuthorization = 'user/requireAuthorization',
+  SetUsername = 'setUsername',
+  RedirectToRoute = 'main/redirectToRoute',
 }
 
-export type SelectFilm = {
-  type: ActionType.SelectFilm;
-  payload: Film | null;
-};
-
 export type Actions =
-  | SelectFilm;
+  | ReturnType<typeof selectFilm>
+  | ReturnType<typeof loadFilms>
+  | ReturnType<typeof loadRelatedFilms>
+  | ReturnType<typeof loadReviews>
+  | ReturnType<typeof requireAuthorization>
+  | ReturnType<typeof setUsername>
+  | ReturnType<typeof redirectToRoute>;
+
+export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
+
+export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;

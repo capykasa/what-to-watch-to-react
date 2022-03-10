@@ -12,7 +12,7 @@ const mapStateToProps = ({ selectedFilm, films }: State) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  onSelectFilm(selectedFilm: Film | null) {
+  onSelectFilm(selectedFilm: Film) {
     dispatch(selectFilm(selectedFilm));
   },
 });
@@ -26,24 +26,26 @@ class FilmsList extends React.Component<PropsFromRedux> {
     const { onSelectFilm, films } = this.props;
 
     return (
-      <div className="catalog__films-list">
-        {films.map((film: Film) => (
-          <article
-            className="small-film-card catalog__films-card"
-            key={film.id}
-            onPointerEnter={() => {
-              onSelectFilm(film);
-            }}
-            onPointerLeave={() => {
-              onSelectFilm(null);
-            }}
-          >
-            <FilmCard
-              film={film}
-            />
-          </article>
-        ))}
-      </div>
+      <>
+        <div className="catalog__films-list">
+          {films.map((film: Film) => (
+            <article
+              className="small-film-card catalog__films-card"
+              key={film.id}
+              onClick={() => {
+                onSelectFilm(film);
+              }}
+            >
+              <FilmCard
+                film={film}
+              />
+            </article>
+          ))}
+        </div>
+        <div className="catalog__more">
+          <button className="catalog__button" type="button">Show more</button>
+        </div>
+      </>
     );
   }
 }

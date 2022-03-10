@@ -18,3 +18,11 @@ export enum MoviePageNavigate {
   Details = 'Details',
   Reviews = 'Reviews',
 }
+
+export enum APIRoute {
+  Films = '/films',
+  Promo = '/promo',
+  Reviews = '/comments',
+  Login = '/login',
+  Logout = '/logout',
+}
