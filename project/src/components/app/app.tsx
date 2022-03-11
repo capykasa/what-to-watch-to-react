@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { Comment } from '../../types/comments';
@@ -40,7 +39,6 @@ function App({ films, comments }: AppScreenProps): JSX.Element {
         <Route path={AppRoute.Film}
           element={
             <MoviePage
-              films={films}
               comments={comments}
             />
           }

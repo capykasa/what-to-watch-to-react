@@ -23,13 +23,13 @@ export const fetchReviewAction = (id: string): ThunkActionResult =>
     dispatch(loadReviews(data));
   };
 
-export const fetchRelatedFilmsAction = (id: string): ThunkActionResult =>
+export const fetchRelatedFilmsAction = (id: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const { data } = await api.get<Film[]>(`${APIRoute.Films}/${id}/similar`);
 
     const adaptedDate = data.map((item) => (adaptFilmToClient(item)));
 
-    dispatch(loadRelatedFilms(adaptedDate, parseInt(id, 10)));
+    dispatch(loadRelatedFilms(adaptedDate, id));
   };
 
 export const checkAuthAction = (): ThunkActionResult =>

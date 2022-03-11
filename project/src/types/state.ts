@@ -5,7 +5,6 @@ export type State = {
   selectedFilm: Film | null,
   films: Film[],
   relatedFilms: Film[],
-  relatedFilmsForId: number | null,
   reviews: Comment[],
   authorizationStatus: string,
   isDataLoaded: boolean,

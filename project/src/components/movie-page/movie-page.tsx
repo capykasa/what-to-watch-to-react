@@ -13,11 +13,10 @@ import PageNotFound from '../page-not-found/page-not-found';
 import FilmCard from '../film-card/film-card';
 import { connect, ConnectedProps } from 'react-redux';
 import { State } from '../../types/state';
-
-const NUMBER_OF_RELATED_FILMS = 4;
+import { store } from '../..';
+import { fetchRelatedFilmsAction } from '../../store/api-actions';
 
 type MoviePageProps = {
-  films: Film[];
   comments: Comment[],
 }
 
@@ -25,8 +24,9 @@ type MyState = {
   selectedNavigateName: string;
 }
 
-const mapStateToProps = ({ selectedFilm }: State) => ({
+const mapStateToProps = ({ selectedFilm, relatedFilms }: State) => ({
   selectedFilm,
+  relatedFilms,
 });
 
 const connector = connect(mapStateToProps);
@@ -43,6 +43,14 @@ class MoviePage extends React.Component<ConnectedComponentProps, MyState> {
     };
   }
 
+  componentDidMount() {
+    const { selectedFilm } = this.props;
+
+    if (selectedFilm) {
+      store.dispatch(fetchRelatedFilmsAction(selectedFilm.id));
+    }
+  }
+
   DisplayNavigatePage = (pageName: string, film: Film, comments: Comment[]) => {
     if (pageName === 'Details') {
       return <MoviePageDetails film={film} />;
@@ -54,8 +62,7 @@ class MoviePage extends React.Component<ConnectedComponentProps, MyState> {
   };
 
   render() {
-    const { films, selectedFilm, comments } = this.props;
-    const relatedMovies = films.slice(NUMBER_OF_RELATED_FILMS);
+    const { selectedFilm, relatedFilms, comments } = this.props;
 
     if (!selectedFilm) {
       return <PageNotFound />;
@@ -141,8 +148,8 @@ class MoviePage extends React.Component<ConnectedComponentProps, MyState> {
           <section className="catalog catalog--like-this">
             <h2 className="catalog__title">More like this</h2>
             <div className="catalog__films-list">
-              {relatedMovies
-                ? relatedMovies.map((relatedFilm: Film) => (
+              {relatedFilms
+                ? relatedFilms.map((relatedFilm: Film) => (
                   <article
                     className="small-film-card catalog__films-card"
                     key={relatedFilm.id}

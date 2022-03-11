@@ -7,7 +7,6 @@ const initialState: State = {
   selectedFilm: null,
   films: [],
   relatedFilms: [],
-  relatedFilmsForId: null,
   reviews: [],
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
@@ -24,7 +23,6 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadRelatedFilms, (state, action) => {
       state.relatedFilms = action.payload.films;
-      state.relatedFilmsForId = action.payload.id;
     })
     .addCase(loadReviews, (state, action) => {
       state.reviews = action.payload;
