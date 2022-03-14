@@ -9,12 +9,13 @@ import HeaderButton from '../header-button/header-button';
 import MoviePageOverview from '../movie-page-overview/movie-page-overview';
 import MoviePageDetails from '../movie-page-details/movie-page-details';
 import MoviePageReviews from '../movie-page-reviews/movie-page-reviews';
-import PageNotFound from '../page-not-found/page-not-found';
+//import PageNotFound from '../page-not-found/page-not-found';
 import FilmCard from '../film-card/film-card';
 import { connect, ConnectedProps } from 'react-redux';
 import { State } from '../../types/state';
 import { store } from '../..';
 import { fetchRelatedFilmsAction, fetchSelectedFilmAction } from '../../store/api-actions';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 type MoviePageProps = {
   comments: Comment[],
@@ -63,7 +64,7 @@ class MoviePage extends React.Component<ConnectedComponentProps, MyState> {
     const { selectedFilm, relatedFilms, comments } = this.props;
 
     if (!selectedFilm) {
-      return <PageNotFound />;
+      return <LoadingScreen />;
     }
 
     return (
