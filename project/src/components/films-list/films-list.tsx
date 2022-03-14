@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
+import { store } from '../..';
+import { clearFilmData } from '../../store/action';
 import { Film } from '../../types/films';
 import { State } from '../../types/state';
 import FilmCard from '../film-card/film-card';
@@ -12,6 +14,10 @@ const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 class FilmsList extends React.Component<PropsFromRedux> {
+
+  componentDidMount() {
+    store.dispatch(clearFilmData(null, [], []));
+  }
 
   render() {
     const { films } = this.props;

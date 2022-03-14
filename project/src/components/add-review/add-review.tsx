@@ -1,5 +1,9 @@
 import React, { ChangeEvent, FormEvent } from 'react';
+import { connect, ConnectedProps } from 'react-redux';
+import browserHistory from '../../browser-history';
+import { State } from '../../types/state';
 import HeaderAccount from '../header-account/header-account';
+import LoadingScreen from '../loading-screen/loading-screen';
 import Logo from '../logo/logo';
 
 const STARS = [9, 8, 7, 6, 5, 4, 3, 2, 1];
@@ -9,12 +13,23 @@ type MyState = {
   reviewText: string;
 }
 
-export default class AddReview extends React.Component {
+const mapStateToProps = ({ selectedFilm }: State) => ({
+  selectedFilm,
+});
 
-  state: MyState = {
-    rating: null,
-    reviewText: '',
-  };
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+class AddReview extends React.Component<PropsFromRedux, MyState> {
+  constructor(props: PropsFromRedux) {
+    super(props);
+
+    this.state = {
+      rating: null,
+      reviewText: '',
+    };
+  }
 
   _handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -23,12 +38,22 @@ export default class AddReview extends React.Component {
   };
 
   render() {
+    const { selectedFilm } = this.props;
+
+    if (!selectedFilm) {
+      return (
+        <div className="player">
+          <Logo />
+          <LoadingScreen />;
+        </div>
+      );
+    }
 
     return (
       <section className="film-card film-card--full">
         <div className="film-card__header">
           <div className="film-card__bg">
-            <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+            <img src={selectedFilm.posterImage} alt={selectedFilm.name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -39,10 +64,16 @@ export default class AddReview extends React.Component {
             <nav className="breadcrumbs">
               <ul className="breadcrumbs__list">
                 <li className="breadcrumbs__item">
-                  <a href="film-page.html" className="breadcrumbs__link">The Grand Budapest Hotel</a>
+                  <span
+                    className="breadcrumbs__link"
+                    onClick={() =>
+                      browserHistory.back()}
+                  >
+                    {selectedFilm.name}
+                  </span>
                 </li>
                 <li className="breadcrumbs__item">
-                  <a className="breadcrumbs__link">Add review</a>
+                  <span className="breadcrumbs__link">Add review</span>
                 </li>
               </ul>
             </nav>
@@ -51,7 +82,7 @@ export default class AddReview extends React.Component {
           </header>
 
           <div className="film-card__poster film-card__poster--small">
-            <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+            <img src={selectedFilm.posterImage} alt={selectedFilm.name} width="218" height="327" />
           </div>
         </div>
 
@@ -101,3 +132,5 @@ export default class AddReview extends React.Component {
     );
   }
 }
+
+export default connect(mapStateToProps)(AddReview);

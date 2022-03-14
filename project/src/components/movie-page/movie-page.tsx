@@ -16,7 +16,6 @@ import { store } from '../..';
 import { fetchRelatedFilmsAction, fetchReviewAction, fetchSelectedFilmAction } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import Logo from '../logo/logo';
-import { clearFilmData } from '../../store/action';
 
 type MyState = {
   selectedNavigateName: string;
@@ -56,10 +55,6 @@ class MoviePage extends React.Component<PropsFromRedux, MyState> {
     store.dispatch(fetchSelectedFilmAction(currentFilmId));
     store.dispatch(fetchReviewAction(currentFilmId));
     store.dispatch(fetchRelatedFilmsAction(currentFilmId));
-  }
-
-  componentWillUnmount() {
-    store.dispatch(clearFilmData(null, [], []));
   }
 
   render() {

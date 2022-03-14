@@ -1,22 +1,37 @@
 import React from 'react';
-import { Film } from '../../types/films';
+import { connect, ConnectedProps } from 'react-redux';
+import { State } from '../../types/state';
 import HeaderButton from '../header-button/header-button';
+import LoadingScreen from '../loading-screen/loading-screen';
+import Logo from '../logo/logo';
 
-type PlayerProps = {
-  films: Film[];
-}
+const mapStateToProps = ({ selectedFilm }: State) => ({
+  selectedFilm,
+});
 
-export default class Player extends React.Component<PlayerProps> {
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+class Player extends React.Component<PropsFromRedux> {
 
   render() {
-    const { films } = this.props;
-    const film = films[0];
+    const { selectedFilm } = this.props;
+
+    if (!selectedFilm) {
+      return (
+        <div className="player">
+          <Logo />
+          <LoadingScreen />;
+        </div>
+      );
+    }
 
     return (
       <>
         <HeaderButton /> {/* Лишние строчки с 42 */}
         <div className="player">
-          <video src={film.videoLink} className="player__video" poster="img/player-poster.jpg"></video>
+          <video src={selectedFilm.videoLink} className="player__video" poster="img/player-poster.jpg"></video>
 
           <button type="button" className="player__exit">Exit</button>
 
@@ -26,7 +41,7 @@ export default class Player extends React.Component<PlayerProps> {
                 <progress className="player__progress" value="30" max="100"></progress>
                 <div className="player__toggler" style={{ left: '30%' }}>Toggler</div>
               </div>
-              <div className="player__time-value">{film.runTime}</div>
+              <div className="player__time-value">{selectedFilm.runTime}</div>
             </div>
 
             <div className="player__controls-row">
@@ -51,3 +66,5 @@ export default class Player extends React.Component<PlayerProps> {
     );
   }
 }
+
+export default connect(mapStateToProps)(Player);

@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './components/app/app';
-import { comments } from './mocks/comments';
 import { films } from './mocks/films';
 import { reducer } from './store/reducer';
 import { api } from './services/api';
@@ -28,7 +27,6 @@ ReactDOM.render(
     <Provider store={store}>
       <App
         films={films}
-        comments={comments}
       />
     </Provider>
   </React.StrictMode>,

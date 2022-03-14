@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { Comment } from '../../types/comments';
 import { Film } from '../../types/films';
 import AddReview from '../add-review/add-review';
 import MainScreen from '../main-screen/main-screen';
@@ -13,10 +12,9 @@ import SignIn from '../sign-in/sign-in';
 
 type AppScreenProps = {
   films: Film[],
-  comments: Comment[],
 }
 
-function App({ films, comments }: AppScreenProps): JSX.Element {
+function App({ films }: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -42,7 +40,7 @@ function App({ films, comments }: AppScreenProps): JSX.Element {
           }
         />
         <Route path={AppRoute.Player}
-          element={<Player films={films} />}
+          element={<Player />}
         />
         <Route path={AppRoute.AddReview}
           element={<AddReview />}
