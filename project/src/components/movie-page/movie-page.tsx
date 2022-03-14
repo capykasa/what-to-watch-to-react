@@ -14,7 +14,7 @@ import FilmCard from '../film-card/film-card';
 import { connect, ConnectedProps } from 'react-redux';
 import { State } from '../../types/state';
 import { store } from '../..';
-import { fetchRelatedFilmsAction } from '../../store/api-actions';
+import { fetchRelatedFilmsAction, fetchSelectedFilmAction } from '../../store/api-actions';
 
 type MoviePageProps = {
   comments: Comment[],
@@ -43,14 +43,6 @@ class MoviePage extends React.Component<ConnectedComponentProps, MyState> {
     };
   }
 
-  componentDidMount() {
-    const { selectedFilm } = this.props;
-
-    if (selectedFilm) {
-      store.dispatch(fetchRelatedFilmsAction(selectedFilm.id));
-    }
-  }
-
   DisplayNavigatePage = (pageName: string, film: Film, comments: Comment[]) => {
     if (pageName === 'Details') {
       return <MoviePageDetails film={film} />;
@@ -60,6 +52,12 @@ class MoviePage extends React.Component<ConnectedComponentProps, MyState> {
     }
     return <MoviePageOverview film={film} />;
   };
+
+  componentDidMount() {
+    const currentFilmId = parseInt(document.location.pathname.replace('/films/:', ''), 10);
+    store.dispatch(fetchSelectedFilmAction(currentFilmId));
+    store.dispatch(fetchRelatedFilmsAction(currentFilmId));
+  }
 
   render() {
     const { selectedFilm, relatedFilms, comments } = this.props;

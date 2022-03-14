@@ -3,7 +3,7 @@ import { ThunkActionResult } from '../types/actions';
 import { Comment } from '../types/comments';
 import { Film } from '../types/films';
 import { adaptFilmToClient } from '../utils';
-import { loadFilms, loadRelatedFilms, loadReviews, requireAuthorization, setUsername } from './action';
+import { loadFilms, loadRelatedFilms, loadReviews, requireAuthorization, selectFilm, setUsername } from './action';
 
 const AUTH_FAIL_MESSAGE = 'Log In. Please.';
 
@@ -14,6 +14,15 @@ export const fetchFilmsAction = (): ThunkActionResult =>
     const adaptedDate = data.map((item) => (adaptFilmToClient(item)));
 
     dispatch(loadFilms(adaptedDate));
+  };
+
+export const fetchSelectedFilmAction = (id: number): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const { data } = await api.get<Film>(`${APIRoute.Films}/${id}`);
+
+    const adaptedDate = (adaptFilmToClient(data));
+
+    dispatch(selectFilm(adaptedDate, id));
   };
 
 export const fetchReviewAction = (id: string): ThunkActionResult =>

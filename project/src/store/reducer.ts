@@ -16,7 +16,7 @@ const initialState: State = {
 const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(selectFilm, (state, action) => {
-      state.selectedFilm = action.payload;
+      state.selectedFilm = action.payload.film;
     })
     .addCase(loadFilms, (state, action) => {
       state.films = action.payload;

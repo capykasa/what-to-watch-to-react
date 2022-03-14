@@ -1,29 +1,20 @@
-import React, { Dispatch } from 'react';
+import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { selectFilm } from '../../store/action';
-import { Actions } from '../../types/actions';
 import { Film } from '../../types/films';
 import { State } from '../../types/state';
 import FilmCard from '../film-card/film-card';
 
-const mapStateToProps = ({ selectedFilm, films }: State) => ({
-  selectedFilm,
+const mapStateToProps = ({ films }: State) => ({
   films,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  onSelectFilm(selectedFilm: Film) {
-    dispatch(selectFilm(selectedFilm));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
+const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 class FilmsList extends React.Component<PropsFromRedux> {
 
   render() {
-    const { onSelectFilm, films } = this.props;
+    const { films } = this.props;
 
     return (
       <>
@@ -32,9 +23,6 @@ class FilmsList extends React.Component<PropsFromRedux> {
             <article
               className="small-film-card catalog__films-card"
               key={film.id}
-              onClick={() => {
-                onSelectFilm(film);
-              }}
             >
               <FilmCard
                 film={film}
@@ -50,4 +38,4 @@ class FilmsList extends React.Component<PropsFromRedux> {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FilmsList);
+export default connect(mapStateToProps)(FilmsList);

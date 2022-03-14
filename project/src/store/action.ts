@@ -6,8 +6,8 @@ import { Film } from '../types/films';
 
 export const selectFilm = createAction(
   ActionType.SelectFilm,
-  (film: Film) => ({
-    payload: film,
+  (film: Film, id: number) => ({
+    payload: { film, id },
   }),
 );
 
