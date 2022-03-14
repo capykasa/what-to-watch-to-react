@@ -32,6 +32,13 @@ export const loadReviews = createAction(
   }),
 );
 
+export const clearFilmData = createAction(
+  ActionType.ClearFilmData,
+  (selectedFilm: null, reviews: [], relatedFilms: []) => ({
+    payload: { selectedFilm, reviews, relatedFilms },
+  }),
+);
+
 export const requireAuthorization = createAction(
   ActionType.RequireAuthorization,
   (authStatus: AuthorizationStatus) => ({

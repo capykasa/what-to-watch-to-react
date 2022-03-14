@@ -5,6 +5,7 @@ import {
   loadFilms,
   loadRelatedFilms,
   loadReviews,
+  clearFilmData,
   requireAuthorization,
   selectFilm,
   setUsername,
@@ -16,6 +17,7 @@ export enum ActionType {
   LoadFilms = 'data/loadFilms',
   LoadRelatedFilms = 'data/loadRelatedFilms',
   LoadReviews = 'data/loadReviews',
+  ClearFilmData = 'data/clearFilmData',
   RequireAuthorization = 'user/requireAuthorization',
   SetUsername = 'setUsername',
   RedirectToRoute = 'main/redirectToRoute',
@@ -26,6 +28,7 @@ export type Actions =
   | ReturnType<typeof loadFilms>
   | ReturnType<typeof loadRelatedFilms>
   | ReturnType<typeof loadReviews>
+  | ReturnType<typeof clearFilmData>
   | ReturnType<typeof requireAuthorization>
   | ReturnType<typeof setUsername>
   | ReturnType<typeof redirectToRoute>;

@@ -25,7 +25,7 @@ export const fetchSelectedFilmAction = (id: number): ThunkActionResult =>
     dispatch(selectFilm(adaptedDate, id));
   };
 
-export const fetchReviewAction = (id: string): ThunkActionResult =>
+export const fetchReviewAction = (id: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const { data } = await api.get<Comment[]>(`${APIRoute.Reviews}/${id}`);
 

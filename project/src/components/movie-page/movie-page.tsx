@@ -9,34 +9,31 @@ import HeaderButton from '../header-button/header-button';
 import MoviePageOverview from '../movie-page-overview/movie-page-overview';
 import MoviePageDetails from '../movie-page-details/movie-page-details';
 import MoviePageReviews from '../movie-page-reviews/movie-page-reviews';
-//import PageNotFound from '../page-not-found/page-not-found';
 import FilmCard from '../film-card/film-card';
 import { connect, ConnectedProps } from 'react-redux';
 import { State } from '../../types/state';
 import { store } from '../..';
-import { fetchRelatedFilmsAction, fetchSelectedFilmAction } from '../../store/api-actions';
+import { fetchRelatedFilmsAction, fetchReviewAction, fetchSelectedFilmAction } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
-
-type MoviePageProps = {
-  comments: Comment[],
-}
+import Logo from '../logo/logo';
+import { clearFilmData } from '../../store/action';
 
 type MyState = {
   selectedNavigateName: string;
 }
 
-const mapStateToProps = ({ selectedFilm, relatedFilms }: State) => ({
+const mapStateToProps = ({ selectedFilm, reviews, relatedFilms }: State) => ({
   selectedFilm,
+  reviews,
   relatedFilms,
 });
 
 const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & MoviePageProps;
 
-class MoviePage extends React.Component<ConnectedComponentProps, MyState> {
-  constructor(props: ConnectedComponentProps) {
+class MoviePage extends React.Component<PropsFromRedux, MyState> {
+  constructor(props: PropsFromRedux) {
     super(props);
 
     this.state = {
@@ -57,14 +54,24 @@ class MoviePage extends React.Component<ConnectedComponentProps, MyState> {
   componentDidMount() {
     const currentFilmId = parseInt(document.location.pathname.replace('/films/:', ''), 10);
     store.dispatch(fetchSelectedFilmAction(currentFilmId));
+    store.dispatch(fetchReviewAction(currentFilmId));
     store.dispatch(fetchRelatedFilmsAction(currentFilmId));
   }
 
+  componentWillUnmount() {
+    store.dispatch(clearFilmData(null, [], []));
+  }
+
   render() {
-    const { selectedFilm, relatedFilms, comments } = this.props;
+    const { selectedFilm, relatedFilms, reviews } = this.props;
 
     if (!selectedFilm) {
-      return <LoadingScreen />;
+      return (
+        <header className="page-header film-card__head">
+          <Logo />
+          <LoadingScreen />;
+        </header>
+      );
     }
 
     return (
@@ -136,7 +143,7 @@ class MoviePage extends React.Component<ConnectedComponentProps, MyState> {
                   </ul>
                 </nav>
 
-                {this.DisplayNavigatePage(this.state.selectedNavigateName, selectedFilm, comments)}
+                {this.DisplayNavigatePage(this.state.selectedNavigateName, selectedFilm, reviews)}
 
               </div>
             </div>

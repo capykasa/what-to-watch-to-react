@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../const';
 import { State } from '../types/state';
-import { loadFilms, loadRelatedFilms, loadReviews, requireAuthorization, selectFilm } from './action';
+import { clearFilmData, loadFilms, loadRelatedFilms, loadReviews, requireAuthorization, selectFilm } from './action';
 
 const initialState: State = {
   selectedFilm: null,
@@ -26,6 +26,11 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadReviews, (state, action) => {
       state.reviews = action.payload;
+    })
+    .addCase(clearFilmData, (state, action) => {
+      state.selectedFilm = action.payload.selectedFilm;
+      state.relatedFilms = action.payload.relatedFilms;
+      state.reviews = action.payload.reviews;
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;

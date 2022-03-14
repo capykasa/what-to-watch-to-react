@@ -38,9 +38,7 @@ function App({ films, comments }: AppScreenProps): JSX.Element {
         />
         <Route path={AppRoute.Film}
           element={
-            <MoviePage
-              comments={comments}
-            />
+            <MoviePage />
           }
         />
         <Route path={AppRoute.Player}
