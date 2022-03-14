@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
+import browserHistory from '../../browser-history';
 import { State } from '../../types/state';
 import HeaderButton from '../header-button/header-button';
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -33,7 +34,14 @@ class Player extends React.Component<PropsFromRedux> {
         <div className="player">
           <video src={selectedFilm.videoLink} className="player__video" poster="img/player-poster.jpg"></video>
 
-          <button type="button" className="player__exit">Exit</button>
+          <button
+            type="button"
+            className="player__exit"
+            onClick={() =>
+              browserHistory.back()}
+          >
+            Exit
+          </button>
 
           <div className="player__controls">
             <div className="player__controls-row">

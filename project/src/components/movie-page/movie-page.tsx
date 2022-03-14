@@ -17,7 +17,10 @@ import { fetchRelatedFilmsAction, fetchReviewAction, fetchSelectedFilmAction } f
 import LoadingScreen from '../loading-screen/loading-screen';
 import Logo from '../logo/logo';
 
+const MAX_COUNT_RELATED_FILMS = 4;
+
 type MyState = {
+  currentFilmId: number,
   selectedNavigateName: string;
 }
 
@@ -36,6 +39,7 @@ class MoviePage extends React.Component<PropsFromRedux, MyState> {
     super(props);
 
     this.state = {
+      currentFilmId: parseInt(document.location.pathname.replace('/films/:', ''), 10),
       selectedNavigateName: 'Overview',
     };
   }
@@ -51,14 +55,15 @@ class MoviePage extends React.Component<PropsFromRedux, MyState> {
   };
 
   componentDidMount() {
-    const currentFilmId = parseInt(document.location.pathname.replace('/films/:', ''), 10);
-    store.dispatch(fetchSelectedFilmAction(currentFilmId));
-    store.dispatch(fetchReviewAction(currentFilmId));
-    store.dispatch(fetchRelatedFilmsAction(currentFilmId));
+    store.dispatch(fetchSelectedFilmAction(this.state.currentFilmId));
+    store.dispatch(fetchReviewAction(this.state.currentFilmId));
+    store.dispatch(fetchRelatedFilmsAction(this.state.currentFilmId));
   }
 
   render() {
     const { selectedFilm, relatedFilms, reviews } = this.props;
+
+    const relatedFilmsForView = relatedFilms.slice(0, MAX_COUNT_RELATED_FILMS);
 
     if (!selectedFilm) {
       return (
@@ -91,12 +96,15 @@ class MoviePage extends React.Component<PropsFromRedux, MyState> {
                 </p>
 
                 <div className="film-card__buttons">
-                  <button className="btn btn--play film-card__button" type="button">
+                  <Link to={`/player/:${selectedFilm.id}`}
+                    className="btn btn--play film-card__button"
+                    type="button"
+                  >
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
                     </svg>
-                    <span>Play</span>
-                  </button>
+                    Play
+                  </Link>
                   <button className="btn btn--list film-card__button" type="button">
                     <svg viewBox="0 0 19 20" width="19" height="20">
                       <use xlinkHref="#add"></use>
@@ -149,14 +157,14 @@ class MoviePage extends React.Component<PropsFromRedux, MyState> {
           <section className="catalog catalog--like-this">
             <h2 className="catalog__title">More like this</h2>
             <div className="catalog__films-list">
-              {relatedFilms
-                ? relatedFilms.map((relatedFilm: Film) => (
+              {relatedFilmsForView
+                ? relatedFilmsForView.map((film: Film) => (
                   <article
                     className="small-film-card catalog__films-card"
-                    key={relatedFilm.id}
+                    key={film.id}
                   >
                     <FilmCard
-                      film={relatedFilm}
+                      film={film}
                     />
                   </article>
                 ))
