@@ -40,7 +40,9 @@ export default class FilmCard extends React.Component<FilmCardProps> {
           <Link
             className="small-film-card__link"
             to={`/films/:${film.id}`}
-            onClick={() => store.dispatch(fetchSelectedFilmAction(film.id))}
+            onClick={() => {
+              store.dispatch(fetchSelectedFilmAction(film.id));
+            }}
           >
             {film.name}
           </Link>

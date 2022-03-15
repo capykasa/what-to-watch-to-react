@@ -21,6 +21,7 @@ export enum MoviePageNavigate {
 
 export enum APIRoute {
   Films = '/films',
+  Favorite = '/favorite',
   Promo = '/promo',
   Reviews = '/comments',
   Login = '/login',

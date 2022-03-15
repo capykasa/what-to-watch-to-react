@@ -25,6 +25,13 @@ export const loadRelatedFilms = createAction(
   }),
 );
 
+export const loadFavoriteFilms = createAction(
+  ActionType.LoadFavoriteFilms,
+  (films: Film[]) => ({
+    payload: films,
+  }),
+);
+
 export const loadReviews = createAction(
   ActionType.LoadReviews,
   (reviews: Comment[]) => ({

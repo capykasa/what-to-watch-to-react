@@ -41,6 +41,15 @@ export const fetchRelatedFilmsAction = (id: number): ThunkActionResult =>
     dispatch(loadRelatedFilms(adaptedDate, id));
   };
 
+export const fetchFavoriteFilmsAction = (): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const { data } = await api.get<Film[]>(APIRoute.Favorite);
+
+    const adaptedDate = data.map((item) => (adaptFilmToClient(item)));
+
+    dispatch(loadFilms(adaptedDate));
+  };
+
 export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {

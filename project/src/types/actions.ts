@@ -9,13 +9,15 @@ import {
   requireAuthorization,
   selectFilm,
   setUsername,
-  redirectToRoute
+  redirectToRoute,
+  loadFavoriteFilms
 } from '../store/action';
 
 export enum ActionType {
   SelectFilm = 'films/selectedFilm',
   LoadFilms = 'data/loadFilms',
   LoadRelatedFilms = 'data/loadRelatedFilms',
+  LoadFavoriteFilms = 'data/loadFavoriteFilms',
   LoadReviews = 'data/loadReviews',
   ClearFilmData = 'data/clearFilmData',
   RequireAuthorization = 'user/requireAuthorization',
@@ -27,6 +29,7 @@ export type Actions =
   | ReturnType<typeof selectFilm>
   | ReturnType<typeof loadFilms>
   | ReturnType<typeof loadRelatedFilms>
+  | ReturnType<typeof loadFavoriteFilms>
   | ReturnType<typeof loadReviews>
   | ReturnType<typeof clearFilmData>
   | ReturnType<typeof requireAuthorization>

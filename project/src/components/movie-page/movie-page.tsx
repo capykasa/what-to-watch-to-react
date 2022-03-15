@@ -19,6 +19,12 @@ import Logo from '../logo/logo';
 
 const MAX_COUNT_RELATED_FILMS = 4;
 
+const dispatchStoreForThisPage = async (id: number) => {
+  store.dispatch(fetchSelectedFilmAction(id));
+  store.dispatch(fetchReviewAction(id));
+  store.dispatch(fetchRelatedFilmsAction(id));
+};
+
 type MyState = {
   currentFilmId: number,
   selectedNavigateName: string;
@@ -55,9 +61,14 @@ class MoviePage extends React.Component<PropsFromRedux, MyState> {
   };
 
   componentDidMount() {
-    store.dispatch(fetchSelectedFilmAction(this.state.currentFilmId));
-    store.dispatch(fetchReviewAction(this.state.currentFilmId));
-    store.dispatch(fetchRelatedFilmsAction(this.state.currentFilmId));
+    dispatchStoreForThisPage(this.state.currentFilmId);
+  }
+
+  componentDidUpdate(prevProps: PropsFromRedux, prevState: MyState) {
+    if (prevState.currentFilmId !== parseInt(document.location.pathname.replace('/films/:', ''), 10)) {
+      this.setState({ currentFilmId: parseInt(document.location.pathname.replace('/films/:', ''), 10) });
+      dispatchStoreForThisPage(this.state.currentFilmId);
+    }
   }
 
   render() {

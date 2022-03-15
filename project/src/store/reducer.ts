@@ -7,6 +7,7 @@ const initialState: State = {
   selectedFilm: null,
   films: [],
   relatedFilms: [],
+  favoriteFilms: [],
   reviews: [],
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,

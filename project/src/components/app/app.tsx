@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { Film } from '../../types/films';
 import AddReview from '../add-review/add-review';
 import MainScreen from '../main-screen/main-screen';
 import MoviePage from '../movie-page/movie-page';
@@ -10,11 +9,7 @@ import Player from '../player/player';
 import PrivateRoute from '../private-route/private-route';
 import SignIn from '../sign-in/sign-in';
 
-type AppScreenProps = {
-  films: Film[],
-}
-
-function App({ films }: AppScreenProps): JSX.Element {
+function App(): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -29,7 +24,7 @@ function App({ films }: AppScreenProps): JSX.Element {
         <Route path={AppRoute.MyList}
           element={
             <PrivateRoute
-              render={() => <MyList films={films} />}
+              render={() => <MyList />}
             >
             </PrivateRoute>
           }
