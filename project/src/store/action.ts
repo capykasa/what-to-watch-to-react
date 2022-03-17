@@ -60,6 +60,8 @@ export const setUsername = createAction(
   }),
 );
 
+export const requireLogout = createAction(ActionType.RequireLogout);
+
 export const redirectToRoute = createAction(
   ActionType.RedirectToRoute,
   (url: AppRoute) => ({

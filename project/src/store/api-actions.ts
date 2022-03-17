@@ -1,9 +1,11 @@
-import { APIRoute, AuthorizationStatus } from '../const';
+import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
+import { dropToken, saveToken, Token } from '../services/token';
 import { ThunkActionResult } from '../types/actions';
+import { AuthData } from '../types/auth-data';
 import { Comment } from '../types/comments';
 import { Film } from '../types/films';
 import { adaptFilmToClient } from '../utils';
-import { loadFilms, loadRelatedFilms, loadReviews, requireAuthorization, selectFilm, setUsername } from './action';
+import { loadFilms, loadRelatedFilms, loadReviews, redirectToRoute, requireAuthorization, requireLogout, selectFilm, setUsername } from './action';
 
 const AUTH_FAIL_MESSAGE = 'Log In. Please.';
 
@@ -60,4 +62,20 @@ export const checkAuthAction = (): ThunkActionResult =>
       // eslint-disable-next-line no-console
       console.log(AUTH_FAIL_MESSAGE);
     }
+  };
+
+export const loginAction = ({ login: email, password }: AuthData): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    const { data: { token } } = await api.post<{ token: Token }>(APIRoute.Login, { email, password });
+    saveToken(token);
+    dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    dispatch(setUsername(email));
+    dispatch(redirectToRoute(AppRoute.Main));
+  };
+
+export const logoutAction = (): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    api.delete(APIRoute.Logout);
+    dropToken();
+    dispatch(requireLogout());
   };

@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../const';
 import { State } from '../types/state';
-import { clearFilmData, loadFilms, loadRelatedFilms, loadReviews, requireAuthorization, selectFilm } from './action';
+import { clearFilmData, loadFilms, loadRelatedFilms, loadReviews, requireAuthorization, requireLogout, selectFilm, setUsername } from './action';
 
 const initialState: State = {
   selectedFilm: null,
@@ -36,6 +36,12 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
       state.isDataLoaded = true;
+    })
+    .addCase(requireLogout, (state) => {
+      state.authorizationStatus = AuthorizationStatus.NoAuth;
+    })
+    .addCase(setUsername, (state, action) => {
+      state.username = action.payload;
     });
 });
 
