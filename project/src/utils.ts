@@ -21,3 +21,5 @@ export const adaptFilmToClient = (item: any): Film => (
     scoresCount: item['scores_count'],
   }
 );
+
+export const createGenresList = (items: Film[]): string[] => [...new Set(items.map((film) => film.genre))];

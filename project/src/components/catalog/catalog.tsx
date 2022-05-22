@@ -1,39 +1,46 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-function Catalog(): JSX.Element {
-  return (
-    <ul className="catalog__genres-list">
-      <li className="catalog__genres-item catalog__genres-item--active">
-        <a href="#" className="catalog__genres-link">All genres</a>
-      </li>
-      <li className="catalog__genres-item">
-        <a href="#" className="catalog__genres-link">Comedies</a>
-      </li>
-      <li className="catalog__genres-item">
-        <a href="#" className="catalog__genres-link">Crime</a>
-      </li>
-      <li className="catalog__genres-item">
-        <a href="#" className="catalog__genres-link">Documentary</a>
-      </li>
-      <li className="catalog__genres-item">
-        <a href="#" className="catalog__genres-link">Dramas</a>
-      </li>
-      <li className="catalog__genres-item">
-        <a href="#" className="catalog__genres-link">Horror</a>
-      </li>
-      <li className="catalog__genres-item">
-        <a href="#" className="catalog__genres-link">Kids & Family</a>
-      </li>
-      <li className="catalog__genres-item">
-        <a href="#" className="catalog__genres-link">Romance</a>
-      </li>
-      <li className="catalog__genres-item">
-        <a href="#" className="catalog__genres-link">Sci-Fi</a>
-      </li>
-      <li className="catalog__genres-item">
-        <a href="#" className="catalog__genres-link">Thrillers</a>
-      </li>
-    </ul>
-  );
+/* eslint-disable no-console */
+import React from 'react';
+
+type CatalogProps = {
+  genres: string[];
+}
+
+type MyState = {
+  sort: string;
+}
+
+class Catalog extends React.Component<CatalogProps, MyState> {
+  constructor(props: CatalogProps) {
+    super(props);
+
+    this.state = {
+      sort: this.props.genres[0],
+    };
+  }
+
+  render() {
+    const { genres } = this.props; // ПЕРЕДАТЬ НОВОЕ ЗНАЧЕНИЕ (ВЫБРАННОЕ) В РОДИТЕЛЬСКИЙ КОМПОНЕНТ С ПОМОЩЬЮ ПРОПСА
+
+    return (
+      <ul className="catalog__genres-list">
+        {genres.map((genre) => (
+          <li
+            key={genre}
+            className={this.state.sort === genre ? 'catalog__genres-item catalog__genres-item--active' : 'catalog__genres-item'}
+          >
+            <span
+              className="catalog__genres-link"
+              onClick={() => {
+                this.setState({ sort: genre });
+              }}
+            >
+              {genre}
+            </span>
+          </li>
+        ))}
+      </ul>
+    );
+  }
 }
 
 export default Catalog;

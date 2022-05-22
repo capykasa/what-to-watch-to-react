@@ -1,5 +1,4 @@
 import FilmsList from '../films-list/films-list';
-import Catalog from '../catalog/catalog';
 import Footer from '../footer/footer';
 import Header from '../header/header';
 import HeaderButton from '../header-button/header-button';
@@ -62,7 +61,6 @@ class MainScreen extends React.Component {
         <div className="page-content">
           <section className="catalog">
             <h2 className="catalog__title visually-hidden">Catalog</h2>
-            <Catalog />
             <FilmsList />
           </section>
           <Footer />
