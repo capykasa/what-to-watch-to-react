@@ -3,6 +3,7 @@ import { Film } from './films';
 
 export type State = {
   selectedFilm: Film | null,
+  currentGenre: string,
   films: Film[],
   relatedFilms: Film[],
   favoriteFilms: Film[],

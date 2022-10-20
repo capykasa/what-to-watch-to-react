@@ -11,6 +11,13 @@ export const selectFilm = createAction(
   }),
 );
 
+export const selectGenre = createAction(
+  ActionType.SelectGenre,
+  (genre: string) => ({
+    payload: genre,
+  }),
+);
+
 export const loadFilms = createAction(
   ActionType.LoadFilms,
   (films: Film[]) => ({

@@ -3,6 +3,7 @@ import { AxiosInstance } from 'axios';
 import { State } from './state';
 import {
   selectFilm,
+  selectGenre,
   loadFilms,
   loadRelatedFilms,
   loadFavoriteFilms,
@@ -16,6 +17,7 @@ import {
 
 export enum ActionType {
   SelectFilm = 'films/selectedFilm',
+  SelectGenre = 'films/currentGenre',
   LoadFilms = 'data/loadFilms',
   LoadRelatedFilms = 'data/loadRelatedFilms',
   LoadFavoriteFilms = 'data/loadFavoriteFilms',
@@ -29,6 +31,7 @@ export enum ActionType {
 
 export type Actions =
   | ReturnType<typeof selectFilm>
+  | ReturnType<typeof selectGenre>
   | ReturnType<typeof loadFilms>
   | ReturnType<typeof loadRelatedFilms>
   | ReturnType<typeof loadFavoriteFilms>

@@ -1,15 +1,14 @@
-/* eslint-disable no-console */
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
+import { MAIN_CATALOG_ITEM } from '../../const';
 import { Film } from '../../types/films';
 import { State } from '../../types/state';
 import { createGenresList } from '../../utils';
 import Catalog from '../catalog/catalog';
 import FilmCard from '../film-card/film-card';
 
-const MAIN_CATALOG_ITEM = 'All genres';
-
-const mapStateToProps = ({ films }: State) => ({
+const mapStateToProps = ({ currentGenre, films }: State) => ({
+  currentGenre,
   films,
 });
 
@@ -19,16 +18,19 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 class FilmsList extends React.Component<PropsFromRedux> {
 
   render() {
-    const { films } = this.props;
+    const { currentGenre, films } = this.props;
+
+    const currentFilms = films.filter((film) => film.genre === currentGenre || currentGenre === MAIN_CATALOG_ITEM);
     const genres = [MAIN_CATALOG_ITEM, ...createGenresList(films)];
 
     return (
       <>
         <Catalog
           genres={genres}
+          currentGenre={currentGenre}
         />
         <div className="catalog__films-list">
-          {films.map((film: Film) => (
+          {currentFilms.map((film: Film) => (
             <article
               className="small-film-card catalog__films-card"
               key={film.id}
@@ -39,9 +41,9 @@ class FilmsList extends React.Component<PropsFromRedux> {
             </article>
           ))}
         </div>
-        <div className="catalog__more">
+        {/* <div className="catalog__more">
           <button className="catalog__button" type="button">Show more</button>
-        </div>
+        </div> */}
       </>
     );
   }

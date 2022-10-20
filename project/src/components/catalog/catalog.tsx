@@ -1,8 +1,10 @@
-/* eslint-disable no-console */
 import React from 'react';
+import { store } from '../..';
+import { selectGenre } from '../../store/action';
 
 type CatalogProps = {
   genres: string[];
+  currentGenre: string;
 }
 
 type MyState = {
@@ -19,19 +21,19 @@ class Catalog extends React.Component<CatalogProps, MyState> {
   }
 
   render() {
-    const { genres } = this.props; // ПЕРЕДАТЬ НОВОЕ ЗНАЧЕНИЕ (ВЫБРАННОЕ) В РОДИТЕЛЬСКИЙ КОМПОНЕНТ С ПОМОЩЬЮ ПРОПСА
+    const { genres, currentGenre } = this.props;
 
     return (
       <ul className="catalog__genres-list">
         {genres.map((genre) => (
           <li
             key={genre}
-            className={this.state.sort === genre ? 'catalog__genres-item catalog__genres-item--active' : 'catalog__genres-item'}
+            className={currentGenre === genre ? 'catalog__genres-item catalog__genres-item--active' : 'catalog__genres-item'}
           >
             <span
               className="catalog__genres-link"
               onClick={() => {
-                this.setState({ sort: genre });
+                store.dispatch(selectGenre(genre));
               }}
             >
               {genre}

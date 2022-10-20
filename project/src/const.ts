@@ -1,3 +1,5 @@
+export const MAIN_CATALOG_ITEM = 'All genres';
+
 export enum AppRoute {
   Main = '/',
   SignIn = '/login',

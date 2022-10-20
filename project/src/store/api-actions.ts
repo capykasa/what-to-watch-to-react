@@ -5,7 +5,7 @@ import { AuthData } from '../types/auth-data';
 import { Comment } from '../types/comments';
 import { Film } from '../types/films';
 import { adaptFilmToClient } from '../utils';
-import { loadFilms, loadRelatedFilms, loadReviews, redirectToRoute, requireAuthorization, requireLogout, selectFilm, setUsername } from './action';
+import { loadFavoriteFilms, loadFilms, loadRelatedFilms, loadReviews, redirectToRoute, requireAuthorization, requireLogout, selectFilm, setUsername } from './action';
 
 const AUTH_FAIL_MESSAGE = 'Log In. Please.';
 
@@ -49,7 +49,7 @@ export const fetchFavoriteFilmsAction = (): ThunkActionResult =>
 
     const adaptedDate = data.map((item) => (adaptFilmToClient(item)));
 
-    dispatch(loadFilms(adaptedDate));
+    dispatch(loadFavoriteFilms(adaptedDate));
   };
 
 export const checkAuthAction = (): ThunkActionResult =>

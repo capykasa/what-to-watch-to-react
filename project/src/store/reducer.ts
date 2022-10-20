@@ -1,10 +1,11 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { AuthorizationStatus } from '../const';
+import { AuthorizationStatus, MAIN_CATALOG_ITEM } from '../const';
 import { State } from '../types/state';
-import { clearFilmData, loadFilms, loadRelatedFilms, loadReviews, requireAuthorization, requireLogout, selectFilm, setUsername } from './action';
+import { clearFilmData, loadFilms, loadRelatedFilms, loadReviews, requireAuthorization, requireLogout, selectFilm, selectGenre, setUsername } from './action';
 
 const initialState: State = {
   selectedFilm: null,
+  currentGenre: MAIN_CATALOG_ITEM,
   films: [],
   relatedFilms: [],
   favoriteFilms: [],
@@ -18,6 +19,9 @@ const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(selectFilm, (state, action) => {
       state.selectedFilm = action.payload.film;
+    })
+    .addCase(selectGenre, (state, action) => {
+      state.currentGenre = action.payload;
     })
     .addCase(loadFilms, (state, action) => {
       state.films = action.payload;

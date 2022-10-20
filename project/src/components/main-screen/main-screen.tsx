@@ -3,14 +3,12 @@ import Footer from '../footer/footer';
 import Header from '../header/header';
 import HeaderButton from '../header-button/header-button';
 import React from 'react';
-import { clearFilmData } from '../../store/action';
-import { store } from '../..';
 
 class MainScreen extends React.Component {
 
-  componentDidMount() {
+  /* componentDidMount() {
     store.dispatch(clearFilmData(null, [], []));
-  }
+  } */
 
   render() {
     return (
